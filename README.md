@@ -8,7 +8,7 @@ Essa documentação dos estudo realizados em Go será realizado utilizando os li
 
 ![image](https://github.com/MarioLuiz/revisao-estudos-go/assets/11471499/2de1b039-762b-43be-9d26-24d26061eed0)
 
-- Go Programming Language For Dummies - Autor (John Wiley)
+- Go Programming Language For Dummies - Autor (Wei-Meng Lee)
 
 ![image](https://github.com/MarioLuiz/revisao-estudos-go/assets/11471499/551bfc5c-5a9d-42ab-b762-8033a9947a48)
 
