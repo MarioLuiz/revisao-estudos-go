@@ -26,24 +26,29 @@ func main() {
 func procuraPelaChaveComLoops(pilha [][]string) {
 	start := time.Now()
 	fmt.Println("\n")
+
 	achouChave := false
 	contador := 0
-	for i := 0; achouChave == false; i++ {
+
+	for i := 0; !achouChave && i < len(pilha); i++ {
 		caixas := pilha[i]
-		for i := 0; i < len(caixas); i++ {
+
+		for j := 0; j < len(caixas); j++ {
 			contador++
-			if caixas[i] == "Vazia" {
-				caixa := []string{caixas[i]}
+			if caixas[j] == "Vazia" {
+				caixa := []string{caixas[j]}
 				pilha = append(pilha, caixa)
 			} else {
-				fmt.Println("Achou a chave na volta: ", contador)
+				fmt.Println("Achou a chave na volta:", contador)
 				achouChave = true
+				break
 			}
 		}
 	}
+
 	elapsed := time.Since(start)
-	fmt.Println("Como ficou a Pilha: \n", pilha)
-	fmt.Println("Procurar pela Chava utilizando loops demorou: ", elapsed)
+	fmt.Println("Como ficou a Pilha:\n", pilha)
+	fmt.Println("Procurar pela Chave utilizando loops demorou:", elapsed)
 }
 
 func procuraPelaChaveComRecursao(pilha [][]string, contador int) {
