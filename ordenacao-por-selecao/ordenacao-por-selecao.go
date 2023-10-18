@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 	listaDesordenada := []int{22, 64, 1, 35, 15, 21, 66, 37, 87, 182, 222, 133, 122, 177, 358, 154, 321, 187, 98, 123}
 	listaOrdenada := []int{}
-
+	fmt.Println("\n Algoritmo ordenacao por selecao em GO")
 	for len(listaDesordenada) > 0 {
 		IndiceComMenorValorEncontrado := buscaIndiceComMenorValor(listaDesordenada)
 		// Adicionando menor valor em um novo Slice
