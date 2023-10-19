@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/big"
 	"math/rand"
 	"time"
 )
@@ -17,7 +18,22 @@ func main() {
 	start := time.Now()
 	procuraPelaChaveComRecursao(pilha, 0)
 	elapsed := time.Since(start)
-	fmt.Println("Procurar pela Chava utilizando recirsao demorou: ", elapsed)
+	fmt.Println("Procurar pela Chava utilizando recursao demorou: ", elapsed)
+
+	numeroFatorialCalculado := 350
+	resultadoFatorial := big.NewInt(0)
+	fmt.Println("\nFatorial com recursao e com Loops, numero calculado: ", numeroFatorialCalculado)
+
+	resultadoFatorial = fatorialComLoop(numeroFatorialCalculado)
+	fmt.Println("Resultado calculo faltorial com Loops: ", resultadoFatorial)
+
+	fmt.Println("\n")
+
+	init := time.Now()
+	resultadoFatorial = fatorialRecursivo(big.NewInt(int64(numeroFatorialCalculado)))
+	finit := time.Since(init)
+	fmt.Println("Calcular Fatorial recursao demorou: ", finit)
+	fmt.Println("Resultado calculo faltorial com Loops: ", resultadoFatorial)
 
 }
 
@@ -39,7 +55,7 @@ func procuraPelaChaveComLoops(pilha [][]string) {
 				caixa := []string{caixas[j]}
 				pilha = append(pilha, caixa)
 			} else {
-				fmt.Println("Achou a chave na volta:", contador)
+				fmt.Println("Achou a chave na volta: ", contador)
 				achouChave = true
 				break
 			}
@@ -48,7 +64,7 @@ func procuraPelaChaveComLoops(pilha [][]string) {
 
 	elapsed := time.Since(start)
 	fmt.Println("Como ficou a Pilha:\n", pilha)
-	fmt.Println("Procurar pela Chave utilizando loops demorou:", elapsed)
+	fmt.Println("Procurar pela Chave utilizando loops demorou: ", elapsed)
 }
 
 func procuraPelaChaveComRecursao(pilha [][]string, contador int) {
@@ -67,6 +83,28 @@ func procuraPelaChaveComRecursao(pilha [][]string, contador int) {
 		}
 	}
 	procuraPelaChaveComRecursao(pilha[1:], contador)
+}
+
+func fatorialRecursivo(x *big.Int) *big.Int {
+	if x.Cmp(big.NewInt(1)) <= 0 {
+		return big.NewInt(1)
+	}
+
+	temp := new(big.Int)
+	temp.Set(x)
+	temp.Sub(temp, big.NewInt(1))
+	return temp.Mul(x, fatorialRecursivo(temp))
+}
+
+func fatorialComLoop(x int) *big.Int {
+	start := time.Now()
+	resultado := big.NewInt(1)
+	for i := 1; i <= x; i++ {
+		resultado.Mul(resultado, big.NewInt(int64(i)))
+	}
+	elapsed := time.Since(start)
+	fmt.Println("Calcular Fatorial loops demorou: ", elapsed)
+	return resultado
 }
 
 func criaUmaPilhaParaBusca() ([][]string, int) {
