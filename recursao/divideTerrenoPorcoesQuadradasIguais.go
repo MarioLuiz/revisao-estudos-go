@@ -11,26 +11,37 @@ func main() {
 	comprimento := 1680
 	largura := 640
 	comprimento, largura = divideTerrenoPorcaoQuadradasIguais(comprimento, largura)
+	if comprimento != largura {
+		fmt.Println("\nNão foi possivel achar a porção de terrenos iguais")
+	} else {
+		fmt.Println("\nAs porções de terras iguais ficaram com as medidas: %d %d", comprimento, largura)
+	}
 
 }
 func divideTerrenoPorcaoQuadradasIguais(comprimento int, largura int) (int, int) {
-	menorLado, maiorLado := MenorLadoAndMaiorLado(comprimento, largura)
+	if eUmCasoBase(comprimento, largura) {
+		return comprimento, largura
+	}
+	largura, comprimento = MenorLadoAndMaiorLado(comprimento, largura)
 	porcaoDeTerraNaoDividida := 0
 
-	if eUmQuadrado(maiorLado, menorLado) {
-		return maiorLado, menorLado
-	} else if (menorLado * 2) < maiorLado {
-		porcaoDeTerraNaoDividida = (menorLado * 2) - maiorLado
-		maiorLado = menorLado
-		menorLado = porcaoDeTerraNaoDividida
-		divideTerrenoPorcaoQuadradasIguais(maiorLado, menorLado)
+	if (comprimento * 2) < largura {
+		porcaoDeTerraNaoDividida = comprimento - (largura * 2)
+		comprimento = largura
+		largura = porcaoDeTerraNaoDividida
+		return divideTerrenoPorcaoQuadradasIguais(comprimento, largura)
+	} else if comprimento > largura {
+		porcaoDeTerraNaoDividida = comprimento - largura
+		comprimento = largura
+		largura = porcaoDeTerraNaoDividida
+		return divideTerrenoPorcaoQuadradasIguais(comprimento, largura)
 	}
-	return 0, 0
+	return divideTerrenoPorcaoQuadradasIguais(comprimento, largura)
 }
 
 func MenorLadoAndMaiorLado(comprimento int, largura int) (int, int) {
-	manorLado := 0
-	maiorLado := 0
+	manorLado := comprimento
+	maiorLado := largura
 	if comprimento < largura {
 		manorLado = comprimento
 		maiorLado = largura
@@ -41,8 +52,8 @@ func MenorLadoAndMaiorLado(comprimento int, largura int) (int, int) {
 	return manorLado, maiorLado
 }
 
-func eUmQuadrado(comprimento int, largura int) bool {
-	if (comprimento % largura) == 0 {
+func eUmCasoBase(comprimento int, largura int) bool {
+	if comprimento == largura {
 		return true
 	} else {
 		return false
