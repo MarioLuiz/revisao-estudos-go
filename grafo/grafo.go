@@ -1,9 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"revisao-estudos-go/doubleendedqueue"
+)
 
 func main() {
 	fmt.Println("Grafo em Go")
+	deque := doubleendedqueue.NewDoubleEndedQueue()
+
+	deque.PushBack("apple")
+	deque.PushFront("banana")
+	deque.PushBack("cherry")
+
+	fmt.Println("Front:", deque.PopFront())
+	fmt.Println("Back:", deque.PopBack())
+	fmt.Println("Front:", deque.PopFront())
+	fmt.Println("Front:", deque.PopFront())
 }
 
 func mockGrafo() map[string][]string {
@@ -22,5 +35,8 @@ func mockGrafo() map[string][]string {
 }
 
 func pessoaEhVendedor(nome string) bool {
-	return nome[-1] == 'm'
+	ultimaLetra := int32(nome[len(nome)-1])
+	caractereProcurado := 'm'
+
+	return ultimaLetra == caractereProcurado
 }
