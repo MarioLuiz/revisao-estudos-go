@@ -5,18 +5,41 @@ import (
 	"revisao-estudos-go/doubleendedqueue"
 )
 
+func pesquisa(nome string, grafo map[string][]string) bool {
+	filaDePesquisa := doubleendedqueue.NewDoubleEndedQueue()
+	filaDePesquisa.PushBack(nome)
+	verificadas := make(map[string]bool)
+
+	for !filaDePesquisa.IsEmpty() {
+		pessoa := filaDePesquisa.PopFront()
+
+		if _, foiVerificada := verificadas[pessoa]; foiVerificada {
+			continue // Pule esta iteração se a pessoa já foi verificada
+		}
+
+		if pessoaEhVendedor(pessoa) {
+			fmt.Printf("%s é um vendedor de manga!\n", pessoa)
+			return true
+		}
+
+		for _, contato := range grafo[pessoa] {
+			filaDePesquisa.PushBack(contato)
+		}
+
+		verificadas[pessoa] = true
+	}
+
+	return false
+}
+
 func main() {
-	fmt.Println("Grafo em Go")
-	deque := doubleendedqueue.NewDoubleEndedQueue()
+	grafo := make(map[string][]string)
+	grafo = mockGrafo()
 
-	deque.PushBack("apple")
-	deque.PushFront("banana")
-	deque.PushBack("cherry")
-
-	fmt.Println("Front:", deque.PopFront())
-	fmt.Println("Back:", deque.PopBack())
-	fmt.Println("Front:", deque.PopFront())
-	fmt.Println("Front:", deque.PopFront())
+	resultado := pesquisa("voce", grafo)
+	if !resultado {
+		fmt.Println("Nenhum vendedor de manga encontrado.")
+	}
 }
 
 func mockGrafo() map[string][]string {

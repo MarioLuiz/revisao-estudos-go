@@ -33,3 +33,7 @@ func (deque *DoubleEndedQueue) PopBack() string {
 	deque.elements = deque.elements[:len(deque.elements)-1]
 	return value
 }
+
+func (deque *DoubleEndedQueue) IsEmpty() bool {
+	return len(deque.elements) == 0
+}
