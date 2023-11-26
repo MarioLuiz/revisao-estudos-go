@@ -7,8 +7,54 @@ import (
 
 func main() {
 	fmt.Println("\nDijkstra em GO\n")
-	processados := []string{}
+	custos := mockGrafoCustos()
+	grafo := mockGrafoArestasPesos()
+	processados := make([]string, 0)
+	pais := mockGrafoPais()
 
+	nodo := acheNoCustoMaisBaixo(custos, processados)
+
+	for nodo != "" {
+		custo := custos[nodo]
+		vizinhos := grafo[nodo]
+
+		for n, custoVizinho := range vizinhos {
+			novoCusto := custo + float64(custoVizinho)
+			if custos[n] > novoCusto {
+				custos[n] = novoCusto
+				pais[n] = nodo
+			}
+		}
+
+		processados = append(processados, nodo)
+		nodo = acheNoCustoMaisBaixo(custos, processados)
+	}
+
+	fmt.Println("Custos finais:", custos)
+	fmt.Println("Caminho final pais:", pais)
+}
+
+func acheNoCustoMaisBaixo(custos map[string]float64, processados []string) string {
+	custoMaisBaixo := math.Inf(1)
+	var nodoCustoMaisBaixo string
+
+	for nodo, custo := range custos {
+		if custo < custoMaisBaixo && !contains(processados, nodo) {
+			custoMaisBaixo = custo
+			nodoCustoMaisBaixo = nodo
+		}
+	}
+
+	return nodoCustoMaisBaixo
+}
+
+func contains(slice []string, element string) bool {
+	for _, e := range slice {
+		if e == element {
+			return true
+		}
+	}
+	return false
 }
 
 func mockGrafoArestasPesos() map[string]map[string]int {
